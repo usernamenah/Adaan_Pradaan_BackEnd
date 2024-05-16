@@ -19,7 +19,6 @@ router.post('/login', async (req, res) => {
         // Delay response to obscure whether the email exists
         return res.status(401).json({ error: 'Invalid email or password' });
     }
-
     // Compare passwords
     const isPasswordValid = await bcrypt.compare(password, student.password);
 
@@ -73,7 +72,40 @@ router.post('/register', async (req, res) => {
       res.status(500).send('Internal Server Error');
   }
 });
+router.put('/updatethestudentbooked', async (req, res) => {
+    try {
+        // Extracting required fields from request body
+        const { email, college, booked1 , section,year   } = req.body;
+        console.log(booked1);
+        console.log(email);
+        console.log(year);
+        console.log(section);
+      const existingStudent1 = await Student.findOne({
+        email :email,
+        college : college,
+        year : year,
+        section: section,
 
+    });
+        
+        // Check if the student exists
+        const existingStudent = await Student.findOneAndUpdate(
+            { email: email, college: college },
+            { $set: { booked: existingStudent1.booked+"~"+booked1 } },
+            { new: true } 
+        ); 
+  
+        if (!existingStudent) {
+            return res.status(400).json({ message: 'Student not found..!!' , data: existingStudent.booked });
+        }
+  
+        // Respond with success message
+        res.status(201).json({ message: 'Booked successfully', booked: existingStudent.booked });
+    } catch (error) {
+        console.error('Error occurred:', error);
+        res.status(500).send('Internal Server Error sujith');
+    }
+});
 // router.post('/updatethestudentbooked', async (req, res) => {
 //     try {
 //         // Extracting required fields from request body

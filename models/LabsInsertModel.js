@@ -19,8 +19,6 @@ const postSchema = new mongoose.Schema({
     deleted:{
       type:String,
    },
-   
-   
 });
 
 // Define mongoose model
