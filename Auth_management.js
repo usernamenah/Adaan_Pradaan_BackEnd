@@ -43,7 +43,7 @@ router.post('/login_management', async (req, res) => {
 router.post('/register_management', async (req, res) => {
   try {
       // Extracting required fields from request body
-      const { email, college, idno , password , booked } = req.body;
+      const { email, college, idno , password , booked ,studentbooked} = req.body;
 
       console.log(req.body);
       // Check if the email is already registered
@@ -64,6 +64,7 @@ router.post('/register_management', async (req, res) => {
           idno:hashedPassword1,
           password: hashedPassword,
           booked,
+          studentbooked,
           
       });
 
@@ -138,5 +139,50 @@ router.put('/updatethemanagementbooked', async (req, res) => {
     }
 });
 
+
+
+
+
+
+
+
+
+
+router.put('/updatethemanagementstudentbookings', async (req, res) => {
+    try {
+        // Extracting required fields from request body
+        const { bc  , jj} = req.body;
+        studentbookedclg = bc;
+        booked1  =jj;
+        console.log(studentbookedclg);
+        console.log(booked1);
+        
+      const existingStudent1 = await Management.find({college :studentbookedclg});
+        
+        // Check if the student exists
+        if (existingStudent1.length === 0) {
+            return res.status(400).json({ message: 'Student not found..!!' });
+        } else {
+            const updates = existingStudent1.map(student => {
+                
+                return Management.updateOne(
+                    { _id: student._id },
+                    { $set: { studentbooked: student.studentbooked+"~"+booked1 } }
+                );
+            });
+        
+            await Promise.all(updates);
+            console.log('Updated students:', existingStudent1.length);
+        }
+  
+       
+  
+        // Respond with success message
+        res.status(201).json({ message: 'Booked successfully', booked: existingStudent1.booked });
+    } catch (error) {
+        console.error('Error occurred:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
 
 module.exports = router;
