@@ -33,7 +33,7 @@ router.post('/login_management', async (req, res) => {
     }
     
     // Successful login 
-    res.json({ email: student.email , college : student.college , booked: student.booked });
+    res.json({ email: student.email , college : student.college , booked: student.booked ,studentbooked: student.studentbooked});
 
 } catch (error) {
     console.error('Error occurred:', error);
