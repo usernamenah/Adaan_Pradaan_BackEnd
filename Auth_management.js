@@ -140,7 +140,30 @@ router.put('/updatethemanagementbooked', async (req, res) => {
 });
 
 
-
+router.put('/updatethemanagementdeleted', async (req, res) => {
+    try {
+        // Extracting required fields from request body
+        const { email, college, booked1 } = req.body;
+        console.log(booked1);
+        console.log(email);
+      const existingStudent1 = await Management.findOne({email :email});
+        const existingStudent = await Management.findOneAndUpdate(
+            { email: email, college: college },
+            { $set: { booked: booked1 } },
+            { new: true } 
+        ); 
+  
+        if (!existingStudent) {
+            return res.status(400).json({ message: 'Student not found..!!' , data: existingStudent.booked });
+        }
+  
+        // Respond with success message
+        res.status(201).json({ message: 'Booked successfully', booked: existingStudent.booked });
+    } catch (error) {
+        console.error('Error occurred:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
 
 
 

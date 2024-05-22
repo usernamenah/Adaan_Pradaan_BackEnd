@@ -5,7 +5,6 @@ const cors=require('cors');
 require('dotenv').config();
 const login=require('./Auth_Student');
 const add_lab=require('./create_labs_managaement');
-const Show_labs_to_student =require('./Show_labs_to_students');
 const login_management=require('./Auth_management');
 
 const mongoose = require('mongoose');
@@ -32,7 +31,7 @@ const connectionParams = {
 app.use("/api",login);
 app.use("/api",add_lab);
 app.use("/api",login_management);
-app.use("/api",Show_labs_to_student);
+// app.use("/api",Show_labs_to_student);
 
 // app.use("/api",collegeRouters);
 

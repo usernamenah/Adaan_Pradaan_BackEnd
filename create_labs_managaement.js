@@ -55,4 +55,24 @@ router.post('/add_lab', async (req, res) => {
     }
 });
 
+
+router.get('/showlabstostudent', async (req, res) => {
+    try {
+      // Fetch data from MongoDB
+      const data = await LabsInsert.find();
+      const reversedData = data.reverse();
+      console.log(data);
+      console.log("-------");
+      console.log(reversedData);
+  
+      // Send the data as JSON response
+      res.status(201).json(reversedData);
+    } catch (err) {
+      console.error('Error occurred:', err);
+      res.status(500).send('Internal Server Error');
+    } finally {
+      
+    }
+  });
+
 module.exports = router;
