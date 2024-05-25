@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 require('dotenv').config();
 
 app.use(cors({
-    origin: ['adaan-pradaan-back-end.vercel.app/'],
+    origin: ['https://adaan-pradaan-back-end.vercel.app/'],
     credentials: true,
   }));
 
