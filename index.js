@@ -13,6 +13,12 @@ app.use(express.json());
 app.use(cors());
 app.use(bodyParser.json());
 require('dotenv').config();
+
+app.use(cors({
+    origin: ['adaan-pradaan-back-end.vercel.app/'],
+    credentials: true,
+  }));
+
 const connectionParams = {
     useNewUrlParser: true,
     useUnifiedTopology: true,
