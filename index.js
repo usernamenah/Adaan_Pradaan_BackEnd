@@ -14,16 +14,16 @@ app.use(logger("dev"));
 
 // Middleware
 app.use(express.json());
-app.use(bodyParser.json());
+
 app.options("", cors({
     origin: '*',
     credentials: true,
-    methods:["GET","POST","PUT","DELETE"],
-}) );
+    methods: ["GET", "POST", "PUT", "DELETE"],
+}));
 app.use(cors({
     origin: '*',
     credentials: true,
-    methods:["GET","POST","PUT","DELETE"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
 }));
 
 const connectionParams = {
@@ -42,7 +42,12 @@ mongoose.connect(process.env.dbUrl, connectionParams)
         console.error("Error connecting to the DB:", error);
     });
 
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+
 // Routes
+
 app.use("/api", login);
 app.use("/api", add_lab);
 app.use("/api", login_management);
