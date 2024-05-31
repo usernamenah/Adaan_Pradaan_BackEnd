@@ -40,10 +40,6 @@ mongoose.connect(process.env.dbUrl, connectionParams)
         console.error("Error connecting to the DB:", error);
     });
 
-
-app.get('/',(req,res)=>{
-    res.send("faekvgbrshndt");
-})
 // Routes
 app.use("/api", login);
 app.use("/api", add_lab);
