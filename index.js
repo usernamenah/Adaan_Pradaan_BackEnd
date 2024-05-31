@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const logger = require("morgan");
 const cors = require('cors');
 const mongoose = require('mongoose');
 require('dotenv').config();
@@ -9,6 +10,7 @@ require('dotenv').config();
 const login = require('./Auth_Student');
 const add_lab = require('./create_labs_managaement');
 const login_management = require('./Auth_management');
+app.use(logger("dev"));
 
 // Middleware
 app.use(express.json());
