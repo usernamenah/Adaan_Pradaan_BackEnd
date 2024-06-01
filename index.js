@@ -13,11 +13,7 @@ const login_management = require('./Auth_management');
 
 
 
-app.use(cors({
-    origin: 'https://adaan-pradaan-front-end.vercel.app',
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE"],
-}));
+app.use(cors());
 app.use(logger("dev"));
 
 // Middleware
