@@ -10,21 +10,21 @@ require('dotenv').config();
 const login = require('./Auth_Student');
 const add_lab = require('./create_labs_managaement');
 const login_management = require('./Auth_management');
+
+
+
+app.use(cors({
+    origin: 'https://adaan-pradaan-front-end.vercel.app',
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+}));
 app.use(logger("dev"));
 
 // Middleware
 app.use(express.json());
 
-app.options("", cors({
-    origin: '*',
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE"],
-}));
-app.use(cors({
-    origin: '*',
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE"],
-}));
+
+
 
 const connectionParams = {
     useNewUrlParser: true,
