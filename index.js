@@ -43,6 +43,9 @@ app.use(bodyParser.json());
 
 
 // Routes
+app.get("/", (req, res) => {
+  res.send("Adan_Pradhan server is running!");
+});
 
 app.use("/api", login);
 app.use("/api", add_lab);
