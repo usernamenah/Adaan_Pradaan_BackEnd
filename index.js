@@ -11,9 +11,9 @@ const login = require('./Auth_Student');
 const add_lab = require('./create_labs_managaement');
 const login_management = require('./Auth_management');
 
-
-
-app.use(cors());
+app.use(cors({
+    origin: 'https://adaan-pradaan-front-egorke4q2-usernamenahs-projects.vercel.app'
+}));
 app.use(logger("dev"));
 
 // Middleware
