@@ -6,50 +6,69 @@ require('dotenv').config();
 
 router.post('/add_lab', async (req, res) => {
     try {
-        // Extracting required fields from request body
-        const { year, branch, subject, date, college , deleted } = req.body;
-        console.log(req.body);
-        // Check if all fields are provided
-        
-
-        // Check if the lab already exists
-        const existingLab = await LabsInsert.findOne({
-            year,
-            branch,
-            subject, 
-            date,
-            college,
-            
-        });
-
-        if (existingLab) {
-            
-            // If lab exists, return error
-
-            return res.status(409).send({ error: 'Lab already exists' });
-            
+        const { year, branch, subject, date, college, deleted } = req.body;
+    
+        // Check for required fields
+        if (!year || !branch || !subject || !date || !college) {
+          return res.status(400).json({ error: 'All fields are required' });
         }
-
-        // Create a new lab document
+    
+        // Check for existing lab (assuming a unique constraint on year, branch, subject, date, and college)
+        const existingLab = await LabsInsert.findOne({ year, branch, subject, date, college });
+    
+        if (existingLab) {
+          return res.status(409).send({ error: 'Lab already exists' });
+        }
+    
+        // Create and save new lab document
         const newLabsInsert = new LabsInsert({
-            year,
-            branch,
-            subject,
-            date,
-            college,
-            deleted
+          year,
+          branch,
+          subject,
+          date,
+          college,
+          deleted
         });
-
-        // Save the lab document to the database
+    
         await newLabsInsert.save();
-        console.log(newLabsInsert);
-
-        // Respond with success message
+    
         res.status(201).json({ message: 'Lab added successfully' });
-    } catch (error) {
+      } catch (error) {
         console.error('Error occurred:', error);
         res.status(500).send('Internal Server Error');
-    }
+      }
+//     try {
+//     const { year, branch, subject, date, college, deleted } = req.body;
+
+//     // Check for required fields
+//     if (!year || !branch || !subject || !date || !college) {
+//       return res.status(400).json({ error: 'All fields are required' });
+//     }
+
+//     // Check for existing lab (assuming a unique constraint on year, branch, subject, date, and college)
+//     const existingLab = await LabsInsert.findOne({ year, branch, subject, date, college });
+
+//     if (existingLab) {
+//       return res.status(409).send({ error: 'Lab already exists' });
+//     }
+
+//     // Create and save new lab document
+//     const newLabsInsert = new LabsInsert({
+//       year,
+//       branch,
+//       subject,
+//       date,
+//       college,
+//       deleted
+//     });
+
+//     await newLabsInsert.save();
+
+//     res.status(201).json({ message: 'Lab added successfully' });
+//   } catch (error) {
+//     console.error('Error occurred:', error);
+//     res.status(500).send('Internal Server Error');
+//   }
 });
 
 
