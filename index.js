@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
-const bodyParser = require('body-parser');
-const logger = require("morgan");
+const logger = require('morgan');
 const cors = require('cors');
 const mongoose = require('mongoose');
 require('dotenv').config();
@@ -13,18 +12,14 @@ const login_management = require('./Auth_management');
 
 // CORS configuration
 app.use(cors({
-    origin: ['https://adaan-pradaan-back-end.vercel.app', 'https://adaan-pradaan-front-end.vercel.app'],
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    preflightContinue: false,
-    optionsSuccessStatus: 204
+    origin: ['https://adaan-pradaan-front-end.vercel.app'],
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE"
 }));
 
-app.use(logger("dev"));
-
 // Middleware
-// app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(logger('dev'));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 // MongoDB connection
 const connectionParams = {
@@ -34,26 +29,33 @@ const connectionParams = {
 
 mongoose.connect(process.env.dbUrl, connectionParams)
     .then(() => {
-        console.info("Connected to the DB");
+        console.info('Connected to the DB');
     })
     .catch((error) => {
-        console.error("Error connecting to the DB:", error);
+        console.error('Error connecting to the DB:', error);
     });
 
 // Routes
-app.get("/", (req, res) => {
-  res.send("Adan_Pradhan server is running!");
+app.get('/', (req, res) => {
+    res.send('Adan_Pradhan server is running!');
 });
 
-app.use("/api", login);
-app.use("/api", add_lab);
-app.use("/api", login_management);
+app.use('/api', login);
+app.use('/api', add_lab);
+app.use('/api', login_management);
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Something went wrong!');
+});
 
 // Start server
 const port = process.env.PORT || 4000;
 app.listen(port, () => {
-    console.log(`Server is running on ${port}`);
+    console.log(`Server is running on port ${port}`);
 });
+
 
 // const express = require('express');
 // const app = express();
