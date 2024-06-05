@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 const router = express.Router();
 require('dotenv').config();
 
-router.post('/add_lab', async (req, res) => {
+router.post('/addthenewlab', async (req, res) => {
     try {
         const { year, branch, subject, date, college, deleted } = req.body;
     
