@@ -9,7 +9,7 @@ router.post('/addthenewlab', async (req, res) => {
         const { year, branch, subject, date, college, deleted } = req.body;
     
         // Check for required fields
-        if (!year || !branch || !subject || !date || !college) {
+        if (!year || !branch || !subject || !date || !college ) {
           return res.status(400).json({ error: 'All fields are required' });
         }
     
