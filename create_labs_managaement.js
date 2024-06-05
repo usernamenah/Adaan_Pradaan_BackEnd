@@ -18,7 +18,7 @@ router.post('/add_lab', async (req, res) => {
         const existingLab = await LabsInsert.findOne({
             year,
             branch,
-            subject,
+            subject, 
             date,
             college,
             
